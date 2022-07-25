@@ -5,35 +5,22 @@ import passport from '../utils/auth/auth.local.js';
 
 const serviceUser = UserService.getInstance();
 
-export const get_login = (req, res) => {
-    return res.render('auth/login', {
-        title:"Iniciar sesión",
-    });
-};
-
-export const post_login = passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/login',
-    failureFlash: true,
-    badRequestMessage: 'Ambos campos son obligatorios.'
-});
-
-export const get_create_account = async  (req, res) => {
-    return res.render('auth/create-account', { 
+export const get_create_account = async (req, res) => {
+    return res.render('auth/create-account', {
         title: 'Crear cuenta',
     });
 };
 
-export const post_create_account = async  (req, res) => {
-    const {name, email, password } = req.body;
+export const post_create_account = async (req, res) => {
+    const { name, email, password } = req.body;
     try {
         const data = {
-            name, 
-            email, 
+            name,
+            email,
             password,
         };
 
-        const user = await serviceUser.create({data});
+        const user = await serviceUser.create({ data });
 
         user.token = crypto.randomBytes(16).toString('hex');
         //guardando los datos en la base de datos.
@@ -51,12 +38,49 @@ export const post_create_account = async  (req, res) => {
         req.flash('success', 'Se envio correo de activación de cuenta.')
         res.redirect('/login')
     } catch (err) {
-        if(err.errors.email){
+        if (err.errors.email) {
             req.flash('errors', { email: err.errors.email.message });
-            req.flash('values', { name, email:''});
+            req.flash('values', { name, email: '' });
             return res.redirect('/create-account')
         }
         req.flash('error', error.message);
         res.redirect('/create-account')
     };
 };
+
+export const get_confirm_account = async (req, res) => {
+    const { token } = req.params;
+    try {
+        const user = await serviceUser.findOne({ token });
+
+        if (!user) {
+            req.flash('error', 'No encontramos un usuario con este token. Quizá haya expirado y debas solicitarlo nuevamente');
+            return res.redirect('/login');
+        };
+
+        user.verified = true;
+        user.token = undefined
+
+        await user.save();
+
+        req.flash('success', 'Su cuenta fue activada exitosamente.')
+        return res.redirect('/login');
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Error al activar cuenta.')
+        return res.redirect('/login');
+    };
+};
+
+export const get_login = (req, res) => {
+    return res.render('auth/login', {
+        title: "Iniciar sesión",
+    });
+};
+
+export const post_login = passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true,
+    badRequestMessage: 'Ambos campos son obligatorios.'
+});
