@@ -61,6 +61,11 @@ UserSchema.methods.toJSON = function() {
     return user;
 };
 
+UserSchema.methods.validPassword = async function (password) {
+    const result = await bcrypt.compare(password, this.password);
+    return result;
+};
+
 const User = mongoose.model('user', UserSchema);
 
 export default User;

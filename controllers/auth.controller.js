@@ -1,20 +1,26 @@
 import crypto from 'crypto';
 import UserService from '../services/user.service.js';
 import sendMail from '../utils/mail/nodemailer.js';
+import passport from '../utils/auth/auth.local.js';
 
 const serviceUser = UserService.getInstance();
 
 export const get_login = (req, res) => {
     return res.render('auth/login', {
         title:"Iniciar sesión",
-        errors: {}
     });
 };
+
+export const post_login = passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true,
+    badRequestMessage: 'Ambos campos son obligatorios.'
+});
 
 export const get_create_account = async  (req, res) => {
     return res.render('auth/create-account', { 
         title: 'Crear cuenta',
-        errors: {}
     });
 };
 

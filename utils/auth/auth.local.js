@@ -9,7 +9,6 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
 }, async (email, password, done) => {
     const user = await service.findOne({email});
-    console.log(user)
     //Verifica si el usuario existe
     if (!user) {
         return done(null, false, {

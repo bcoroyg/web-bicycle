@@ -16,6 +16,12 @@ class UserService {
         const user = await models.User.create(data);
         return user;
     }
+
+
+    async findOne(options){
+        const user = await models.User.findOne(options);
+        return user;
+    }
 };
 
 export default UserService;
