@@ -44,6 +44,10 @@ app.use((req, res, next)=>{
     res.locals.year = year.getFullYear();
     //flash
     res.locals.messages = req.flash();
+    //path
+    res.locals.path = req.path;
+    //User
+    res.locals.userAuth = req.user || {};
     next();
 });
 
