@@ -1,10 +1,10 @@
 ul.navbar-nav
   li.nav-item
-    a.nav-link(href='/dashboard/users', class=(locals.path==='/dashboard/users'?'active':'')) Usuarios 
-  li.nav-item
     a.nav-link(href='/dashboard/bicycles', class=(locals.path==='/dashboard/bicycles'?'active':'')) Bicicletas
   li.nav-item
     a.nav-link(href='/dashboard/reserves', class=(locals.path==='/dashboard/reserves'?'active':'')) Reservas
+  li.nav-item
+    a.nav-link(href='/dashboard/users', class=(locals.path==='/dashboard/users'?'active':'')) Usuarios 
 .m-auto
   h6.text-white.mb-0= locals.userAuth.name
 a.btn.btn-outline-danger.my-2.my-sm-0(href='/logout', role='button') Cerrar Sesión

@@ -16,12 +16,12 @@ html(lang="es")
         button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
           span.navbar-toggler-icon
         #navbarSupportedContent.collapse.navbar-collapse
-        if locals.userAuth.role === 'Admin'
-          include ../partials/navbar-dashboard
-        else if locals.userAuth.role === 'Customer'
-          include ../partials/navbar-authenticated
-        else
-          include ../partials/navbar-no-authenticated
+          if locals.userAuth.role === 'Admin'
+            include ../partials/navbar-dashboard
+          else if locals.userAuth.role === 'Customer'
+            include ../partials/navbar-authenticated
+          else
+            include ../partials/navbar-no-authenticated
     .container.vh-100
       block content
     include ../partials/scripts
