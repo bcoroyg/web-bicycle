@@ -1,33 +1,35 @@
 extends ../layouts/auth
 block content
+  - const errors = messages.errors || null
+  - const values = messages.values || null
   main.form-signin.row.align-items-center
     form.text-center.shadow-lg.p-2(action='/create-account', method='post')
       img.mb-4(src='/images/cycling.png', alt='')
       h3.h3.mb-3.fw-normal Crear Cuenta
       .form-floating
-        input#name.form-control(type='text', name='name', value=name, placeholder='Ingresar nombre')
+        input#name.form-control(type='text', name='name', value= ((values) ? `${values[0].name}` : ''), placeholder='Ingresar nombre')
         label(for='name') Nombre
-        if errors.name
+        if errors
           p.form-text.my-0.text-danger
-            = errors.name.message
+            = errors[0].name
       .form-floating
-        input#email.form-control(type='text', name='email', value=email, placeholder='Ingresar email')
+        input#email.form-control(type='text', name='email', value= ((values) ? `${values[0].email}` : ''), placeholder='Ingresar email')
         label(for='email') Email
-        if errors.email
+        if errors
           p.form-text.my-0.text-danger
-            = errors.email.message
+            = errors[0].email
       .form-floating
         input#password.form-control(type='password', name='password', placeholder='Ingresar password')
         label(for='password') Password
-        if errors.password
+        if errors
           p.form-text.my-0.text-danger
-            = errors.password.message
+            = errors[0].password
       .form-floating
         input#confirmPassword.form-control(type='password', name='confirmPassword', placeholder='Ingresar password nuevamente')
         label(for='confirmPassword') Confirmar Password
-        if errors.password
+        if errors
           p.form-text.my-0.text-danger
-            = errors.password.message
+            = errors[0].confirmPassword
       .d-grid.gap-2
         button.btn.btn-primary.mt-3(type='submit') Crear Cuenta
       .pt-3
