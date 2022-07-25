@@ -7,6 +7,7 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import config from './config/index.js';
 import routerAPP from './routes/index.js';
+import connectionDB from './lib/mongoose.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -60,6 +61,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(config.port, () => {
+app.listen(config.port, async () => {
     console.log(`Server started on port`);
+    //Conexión a la base de datos
+    await connectionDB();
 });
