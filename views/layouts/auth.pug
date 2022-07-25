@@ -9,6 +9,14 @@ html(lang="es")
     link(rel="stylesheet", href="/css/auth.css")
     title #{title}
   body
+    if messages.success 
+      .alert.alert-success.alert-dismissible.fade.show.text-center.fixed-top(role='alert')
+        strong= messages.success
+        button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+    if messages.error 
+      .alert.alert-danger.alert-dismissible.fade.show.text-center.fixed-top(role='alert')
+        strong= messages.error
+        button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
     .container.vh-100
       block content
     include ../partials/scripts

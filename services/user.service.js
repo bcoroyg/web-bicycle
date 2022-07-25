@@ -1,3 +1,5 @@
+import models from "../db/models/index.js";
+
 class UserService {
     static _userServiceInstance = null;
 
@@ -9,6 +11,11 @@ class UserService {
         };
         return UserService._userServiceInstance;
     };
+
+    async create({data}){
+        const user = await models.User.create(data);
+        return user;
+    }
 };
 
 export default UserService;
