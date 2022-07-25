@@ -21,6 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next)=>{
+    const year = new Date;
+    res.locals.year = year.getFullYear();
+    next();
+});
+
 //Router
 routerAPP(app);
 

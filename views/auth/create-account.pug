@@ -1,0 +1,37 @@
+extends ../layouts/auth
+block content
+  main.form-signin.row.align-items-center
+    form.text-center.shadow-lg.p-2(action='/create-account', method='post')
+      img.mb-4(src='/images/cycling.png', alt='')
+      h3.h3.mb-3.fw-normal Crear Cuenta
+      .form-floating
+        input#name.form-control(type='text', name='name', value=name, placeholder='Ingresar nombre')
+        label(for='name') Nombre
+        if errors.name
+          p.form-text.my-0.text-danger
+            = errors.name.message
+      .form-floating
+        input#email.form-control(type='text', name='email', value=email, placeholder='Ingresar email')
+        label(for='email') Email
+        if errors.email
+          p.form-text.my-0.text-danger
+            = errors.email.message
+      .form-floating
+        input#password.form-control(type='password', name='password', placeholder='Ingresar password')
+        label(for='password') Password
+        if errors.password
+          p.form-text.my-0.text-danger
+            = errors.password.message
+      .form-floating
+        input#confirmPassword.form-control(type='password', name='confirmPassword', placeholder='Ingresar password nuevamente')
+        label(for='confirmPassword') Confirmar Password
+        if errors.password
+          p.form-text.my-0.text-danger
+            = errors.password.message
+      .d-grid.gap-2
+        button.btn.btn-primary.mt-3(type='submit') Crear Cuenta
+      .pt-3
+        a.float-start.text-decoration-none(href='/') Volver a inicio
+        a.float-end.text-decoration-none(href='/login') Iniciar sesión
+      .pt-4
+        p.text-muted &copy; #{locals.year}
