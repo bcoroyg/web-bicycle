@@ -5,17 +5,11 @@ block content
       img.mb-4(src='/images/cycling.png', alt='')
       h3.h3.mb-3.fw-normal Iniciar Sesión
       .form-floating
-        input#email.form-control(type='text', name='email', value=email, placeholder='Ingresar email')
+        input#email.form-control(type='text', name='email', placeholder='Ingresar correo.')
         label(for='email') Email
-        if errors.email
-          p.form-text.my-0.text-danger
-            = errors.email.message
       .form-floating
-        input#password.form-control(type='password', name='password', placeholder='Ingresar password')
-        label(for='password') Password
-        if errors.password
-          p.form-text.my-0.text-danger
-            = errors.password.message
+        input#password.form-control(type='password', name='password', placeholder='Ingresar contraseña.')
+        label(for='password') Contraseña
       .d-grid.gap-2
         button.btn.btn-primary.mt-3(type='submit') Iniciar Sesión
       .pt-3

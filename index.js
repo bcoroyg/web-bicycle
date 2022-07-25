@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';
 import flash from 'connect-flash';
+import passport from 'passport';
 import config from './config/index.js';
 import routerAPP from './routes/index.js';
 import connectionDB from './lib/mongoose.js';
@@ -30,6 +31,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+//Inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //flash messages
 app.use(flash());
