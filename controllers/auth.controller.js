@@ -79,8 +79,19 @@ export const get_login = (req, res) => {
 };
 
 export const post_login = passport.authenticate('local', {
-    successRedirect: '/dashboard',
+    successRedirect: '/dashboard/bicycles',
     failureRedirect: '/login',
     failureFlash: true,
     badRequestMessage: 'Ambos campos son obligatorios.'
 });
+
+export const get_logout = (req, res) => {
+    req.logOut((err)=>{
+        if(err) {
+            req.flash('error', err);
+            return res.redirect('/login');
+        }
+        req.flash('success', 'Cerraste sesión correctamente.');
+        return res.redirect('/login');
+    });
+};
