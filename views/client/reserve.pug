@@ -1,0 +1,18 @@
+extends ../layouts/layout
+block content 
+  .h-100.d-flex.flex-nowrap.flex-column.justify-content-between.pt-4
+    .container 
+      h2.my-5.text-center Mis reservas
+      .row.row-cols-1.row-cols-md-2.row-cols-lg-3
+        if reserves.length
+          each reserve in reserves
+            .col.mb-4
+              .card.mx-auto.mx-md-0(style='width:300px')
+                img.card-img-top(src='/images/bicycle.jpg', alt='...')
+                .card-body
+                  h5.card-title #{reserve.bicycle.model}
+                  p.card-text
+                    | This is a wider card with supporting text below as a natural lead-in
+        else 
+          p.text-center No tengo reservas
+  include ../partials/footer

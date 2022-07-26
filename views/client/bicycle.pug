@@ -23,12 +23,11 @@ block content
                       button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                     .modal-body
                       form(method='post' action=`/reserves/${bicycle.id}/create`)
-                        input(type='hidden' name='bicyId' value= bicycle.id)
                         input(type='hidden' name='userId' value= locals.userAuth.id)
-                        .form-group
+                        .mb-3
                           label.col-form-label(for='from') Desde:
                           input.form-control(type='date' name='from' required)
-                        .form-group
+                        .mb-3
                           label.col-form-label(for='to') Hasta:
                           input.form-control(type='date' name='to' required)
                         .modal-footer
