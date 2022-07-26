@@ -5,3 +5,17 @@ block content
       .masthead-subheading Bienvenidos a
       .masthead-heading.text-uppercase Web Bicicletas
       a.btn.btn-primary.btn-lg.text-uppercase(href='#bicycles') Ver Bicicletas
+  #bicycles.container.mt-5 
+    h2.display-4.my-5.text-center Bicicletas
+    .row.row-cols-1.row-cols-md-2.row-cols-lg-3
+      each bicycle in bicycles
+        .col.mb-4
+          .card.mx-auto.mx-md-0(style='width:300px')
+            img.card-img-top(src='/images/bicycle.jpg', alt='...')
+            .card-body
+              h5.card-title #{bicycle.model}
+              p.card-text
+                | This is a wider card with supporting text below as a natural lead-in
+              p.card-text
+                small.text-muted Last updated 3 mins ago
+  include ./partials/footer

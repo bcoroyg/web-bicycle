@@ -11,8 +11,8 @@ class BicycleService {
         return BicycleService._bicycleServiceInstance;
     };
 
-    async find(){
-        const bicycles = await models.Bicycle.find({});
+    async find(option={}){
+        const bicycles = await models.Bicycle.find(option);
         return bicycles;
     }
 

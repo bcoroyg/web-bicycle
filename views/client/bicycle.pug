@@ -1,0 +1,39 @@
+extends ../layouts/layout
+block content 
+  main.pt-5 
+    .mt-4.text-right
+      a.btn.btn-primary.btn-lg.text-uppercase(href=`/reserves/${locals.userAuth.id}`) Mis reservas
+    h2.display-4.my-3.text-center Bicicletas
+    .row.row-cols-1.row-cols-md-2.row-cols-lg-3
+      each bicycle in bicycles
+        .col.mb-4
+          .card.mx-auto.mx-md-0(style='width:300px')
+            img.card-img-top(src='/images/bicycle.jpg', alt='...')
+            .card-body
+              h5.card-title #{bicycle.model}
+              p.card-text
+                | This is a wider card with supporting text below as a natural lead-in
+            if !bicycle.reserved
+              button.btn.btn-success.btn-block(type='button' data-bs-toggle='modal' data-bs-target=`#modal${bicycle.code}`) Reservar
+              .modal.fade(id=`modal${bicycle.code}`, tabindex='-1', aria-labelledby='exampleModalLabel', aria-hidden='true')
+                .modal-dialog.modal-dialog-centered.text-center.mx-auto
+                  .modal-content
+                    .modal-header
+                      h5#exampleModalLabel.modal-title Reservar
+                      button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                    .modal-body
+                      form(method='post' action=`/reserves/${bicycle.id}/create`)
+                        input(type='hidden' name='bicyId' value= bicycle.id)
+                        input(type='hidden' name='userId' value= locals.userAuth.id)
+                        .form-group
+                          label.col-form-label(for='from') Desde:
+                          input.form-control(type='date' name='from' required)
+                        .form-group
+                          label.col-form-label(for='to') Hasta:
+                          input.form-control(type='date' name='to' required)
+                        .modal-footer
+                          button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cerrar
+                          button.btn.btn-primary(type='submit') Guardar
+            else 
+              p.text-center No disponible
+  include ../partials/footer

@@ -78,16 +78,21 @@ export const get_login = (req, res) => {
     });
 };
 
-export const post_login = passport.authenticate('local', {
-    successRedirect: '/dashboard/bicycles',
+export const post_login = [passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true,
     badRequestMessage: 'Ambos campos son obligatorios.'
-});
+}), (req, res) => {
+    if (req.user.role === 'Admin') {
+        res.redirect('/dashboard/bicycles');
+    } else {
+        res.redirect('/bicycles')
+    }
+}];
 
 export const get_logout = (req, res) => {
-    req.logOut((err)=>{
-        if(err) {
+    req.logOut((err) => {
+        if (err) {
             req.flash('error', err);
             return res.redirect('/login');
         }
