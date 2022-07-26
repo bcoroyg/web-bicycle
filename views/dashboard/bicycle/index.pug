@@ -2,15 +2,14 @@ extends ../../layouts/layout
 
 block content
   main.pt-5  
-    .my-2(style="height:40px;")
+    .my-3(style="height:50px;")
       if locals.messages 
         each categorie in Object.keys(locals.messages)
-          if categorie === 'success'
-          .alert.alert-dismissible.fade.show.text-center.mt-5(role='alert', class=(categorie==='success' ? 'alert-success':'alert-danger'))
-            strong= locals.messages[categorie]
-            button.close(type='button' data-dismiss='alert' aria-label='Close')
-              span(aria-hidden='true') &times;
-    a.btn.btn-primary.my-3(href='/dashboard/bicycles/create' role='button') Nueva Bicicleta
+          if categorie === 'success' || categorie === 'error'
+            .alert.alert-dismissible.fade.show.text-center(role='alert', class=(categorie==='success' ? 'alert-success':'alert-danger'))
+              strong= locals.messages[categorie]
+              button.btn-close(type='button', data-bs-dismiss="alert", aria-label="Close")
+    a.btn.btn-primary.mb-3(href='/dashboard/bicycles/create' role='button') Nueva Bicicleta
     .table-responsive
       table.table.table-striped
         thead.table-dark
@@ -32,9 +31,9 @@ block content
                 td 
                   a.btn.btn-success.d-block(href= `/dashboard/bicycles/${bicycle.id}/update` role='button') Editar
                 td 
-                  form.inline(method='post' action=`/dashboard/bicycles/${bicycle.id}/delete`)
+                  form.d-grid(method='post' action=`/dashboard/bicycles/${bicycle.id}/delete`)
                     input(type='hidden' name='id' value= bicycle.id)
-                    button.link-button(type='submit' name='submit_param' value='submit_value' class='btn btn-danger w-75') 
+                    button(type='submit' class='btn btn-danger') 
                       = 'Eliminar' 
           else
             tr

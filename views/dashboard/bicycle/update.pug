@@ -1,0 +1,37 @@
+extends ../../layouts/layout
+block content
+  main.pt-5 
+    - const errors = messages.errors || null
+    - const values = messages.values || null
+    .my-3(style="height:50px;")
+    .text-center 
+      h1 Actualizando Bicicleta
+    .card-body
+      form(action=`/dashboard/bicycles/${bicycle.id}/update` method='post')
+        .mb-1
+          label.form-label(for='color') Color:
+          input#color.form-control(type='text', name='color', placeholder='Ingresar color', value=bicycle.color)
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].color
+        .mb-1
+          label.form-label(for='model') Modelo:
+          input#model.form-control(type='text', name='model', placeholder='Ingresar modelo', value=bicycle.model)
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].model
+        .mb-1
+          label.form-label(for='lat') Latitud:
+          input#lat.form-control(type='text', name='lat' placeholder='Ingresar latitud', value=bicycle.location[0])
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].lat
+        .mb-1
+          label.form-label(for='lng') Longitud:
+          input#lng.form-control(type='text', name='lng', placeholder='Ingresar longitud', value=bicycle.location[1])
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].lng
+        .d-flex.mt-5
+          button.btn.btn-success.col-5(type='submit', value='OK') Actualizar
+          a.btn.btn-danger.col-5.ms-auto(href='/dashboard/bicycles', role="button") Volver

@@ -20,6 +20,21 @@ class BicycleService {
         const bicycle = await models.Bicycle.create(data);
         return bicycle;
     }
+
+    async findById({id}){
+        const bicycle = await models.Bicycle.findById(id);
+        return bicycle;
+    }
+
+    async findByIdAndUpdate({id, data}){
+        const bicycle = await models.Bicycle.findByIdAndUpdate(id, data, { new: true });
+        return bicycle;
+    }
+
+    async findByIdAndDelete({id}){
+        const bicycle = await models.Bicycle.findByIdAndDelete(id);
+        return bicycle;
+    }
 };
 
 export default BicycleService;
