@@ -1,0 +1,41 @@
+extends ../../layouts/layout
+block content
+  main.pt-5 
+    - const errors = messages.errors || null
+    - const values = messages.values || null
+    .my-3(style="height:50px;")
+      if locals.messages.success 
+        .alert.alert-success.alert-dismissible.fade.show.text-center(role='alert')
+          strong= locals.messages.success 
+          button.btn-close(type='button', data-bs-dismiss="alert", aria-label="Close")
+    .text-center 
+      h1 Nueva Bicicleta 
+    .card-body
+      form(action='/dashboard/bicycles/create', method='post')
+        .mb-1
+          label.form-label(for='color') Color:
+          input#color.form-control(type='text', name='color', placeholder='Ingresar color', value= ((values) ? `${values[0].color}` : ''))
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].color
+        .mb-1
+          label.form-label(for='model') Modelo:
+          input#model.form-control(type='text', name='model', placeholder='Ingresar modelo', value= ((values) ? `${values[0].model}` : ''))
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].model
+        .mb-1
+          label.form-label(for='lat') Latitud:
+          input#lat.form-control(type='text', name='lat' placeholder='Ingresar latitud', value= ((values) ? `${values[0].lat}` : ''))
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].lat
+        .mb-1
+          label.form-label(for='lng') Longitud:
+          input#lng.form-control(type='text', name='lng', placeholder='Ingresar longitud', value= ((values) ? `${values[0].lng}` : ''))
+          p.form-text.my-0.text-danger(style="height:20px;")
+            if errors
+                = errors[0].lng
+        .d-flex.mt-5
+          button.btn.btn-primary.col-5(type='submit', value='OK') Crear
+          a.btn.btn-danger.col-5.ms-auto(href='/dashboard/bicycles', role="button") Volver

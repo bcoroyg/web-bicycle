@@ -1,3 +1,4 @@
+import models from "../db/models/index.js";
 class BicycleService {
     static _bicycleServiceInstance = null;
 
@@ -9,6 +10,16 @@ class BicycleService {
         };
         return BicycleService._bicycleServiceInstance;
     };
+
+    async find(){
+        const bicycles = await models.Bicycle.find({});
+        return bicycles;
+    }
+
+    async create({data}){
+        const bicycle = await models.Bicycle.create(data);
+        return bicycle;
+    }
 };
 
 export default BicycleService;

@@ -30,11 +30,11 @@ block content
                 td= bicycle.model  
                 td= bicycle.location
                 td 
-                  a.btn.btn-success(href= `/dashboard/bicycles/${bicycle.id}/update` role='button') Editar
+                  a.btn.btn-success.d-block(href= `/dashboard/bicycles/${bicycle.id}/update` role='button') Editar
                 td 
                   form.inline(method='post' action=`/dashboard/bicycles/${bicycle.id}/delete`)
                     input(type='hidden' name='id' value= bicycle.id)
-                    button.link-button(type='submit' name='submit_param' value='submit_value' class='btn btn-danger') 
+                    button.link-button(type='submit' name='submit_param' value='submit_value' class='btn btn-danger w-75') 
                       = 'Eliminar' 
           else
             tr
