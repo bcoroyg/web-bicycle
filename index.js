@@ -6,11 +6,13 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 import flash from 'connect-flash';
 import passport from 'passport';
+import sessionMongoDB from 'connect-mongodb-session';
 import config from './config/index.js';
 import routerAPP from './routes/index.js';
 import connectionDB from './lib/mongoose.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const MongoDBStore = sessionMongoDB(session);
 
 const app = express();
 
@@ -25,11 +27,26 @@ app.use(express.urlencoded({ extended: false }));
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 //sesion
+let store;
+if (process.env.NODE_ENV === 'development') {
+  store = new session.MemoryStore
+} else {
+  store = new MongoDBStore({
+    uri: config.mongoUri,
+    collection: 'sessions'
+  });
+  store.on('error', function (error) {
+    console.log(error)
+    assert.ifError(error);
+    assert.ok(false);
+  });
+};
 app.use(session({
     secret: config.secretSession,
     key: config.keySession,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
+    store,
 }));
 
 //Inicializar passport
