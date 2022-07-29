@@ -120,7 +120,7 @@ export const post_forgot_password = async (req, res) => {
         //Creando token
         userDB.token = crypto.randomBytes(16).toString('hex');
         //Expiración del token
-        userDB.expireToken = Date.now()+3600000;
+        userDB.expireToken = Date.now() + 3600000;
         //Guardando los datos en la base de datos.
         const user = await userDB.save();
         //Creando url de reset password,
@@ -138,5 +138,51 @@ export const post_forgot_password = async (req, res) => {
         console.log(error)
         req.flash('error', 'Error al restablecer contraseña.')
         return res.redirect('/forgot-password');
+    };
+};
+
+export const get_reset_password = async (req, res) => {
+    const { token } = req.params;
+    try {
+        const userDB = await serviceUser.findOne({ token, expireToken: { $gt: Date.now() } });
+        if (!userDB) {
+            req.flash('error', 'No encontramos un usuario con este token. Quizá haya expirado y debas solicitarlo nuevamente.');
+            return res.redirect('/forgot-password');
+        };
+        return res.render('auth/reset-password', {
+            title: 'Restablecer Constraseña',
+            token
+        });
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Error en el reseteo de contraseña')
+        return res.redirect('/login');
+    };
+};
+
+export const post_reset_password = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    try {
+        const user = await serviceUser.findOne({ token, expireToken: { $gt: Date.now() } });
+        //No existe el usuario o el token es invalido
+
+        if (!user) {
+            req.flash('error', 'No encontramos un usuario con este token. Quizá haya expirado y debas solicitarlo nuevamente.');
+            return res.redirect('/login');
+        };
+
+        user.password = password;
+        //limpiando token y expiración
+        user.token = undefined;
+        user.expireToken = undefined;
+        //guardando la nueva contraseña
+        await user.save();
+        req.flash('success', 'Su contraseña fue restablecida exitosamente.');
+        return res.redirect('/login');
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Error en el reseteo de contraseña')
+        return res.redirect('/login');
     };
 };

@@ -5,11 +5,13 @@ import {
     get_forgot_password, 
     get_login, 
     get_logout, 
+    get_reset_password, 
     post_create_account, 
     post_forgot_password, 
-    post_login 
+    post_login, 
+    post_reset_password
 } from '../controllers/auth.controller.js';
-import { createValidatorUser, forgotPasswordValidatorUser } from '../utils/validators/auth.validator.js';
+import { createValidatorUser, forgotPasswordValidatorUser, resetPasswordValidatorUser } from '../utils/validators/auth.validator.js';
 
 const router = express.Router();
 
@@ -26,5 +28,8 @@ router.get('/logout', get_logout);
 //Olvido de contraseña
 router.get('/forgot-password', get_forgot_password);
 router.post('/forgot-password', forgotPasswordValidatorUser, post_forgot_password);
+//restablecer contraseña
+router.get("/reset-password/:token", get_reset_password);
+router.post("/reset-password/:token", resetPasswordValidatorUser, post_reset_password);
 
 export default router;
