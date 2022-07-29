@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import UserService from '../services/user.service.js';
 import sendMail from '../utils/mail/nodemailer.js';
-import passport from '../utils/auth/auth.local.js';
+import passport from '../utils/auth/passport.js';
 
 const serviceUser = UserService.getInstance();
 
@@ -82,6 +82,23 @@ export const post_login = [passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true,
     badRequestMessage: 'Ambos campos son obligatorios.'
+}), (req, res) => {
+    if (req.user.role === 'Admin') {
+        res.redirect('/dashboard/bicycles');
+    } else {
+        res.redirect('/bicycles')
+    }
+}];
+
+//GOOGLE
+export const get_auth_google = passport.authenticate('google', {
+    scope: ["profile", "email"]
+});
+
+export const get_callback_google = [passport.authenticate('google', {
+    failureRedirect: '/login',
+    failureFlash: true,
+    badRequestMessage: 'Error OAuth Google.'
 }), (req, res) => {
     if (req.user.role === 'Admin') {
         res.redirect('/dashboard/bicycles');

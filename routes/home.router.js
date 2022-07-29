@@ -1,15 +1,7 @@
 import express from 'express';
-import BicycleService from '../services/bicycle.service.js';
-
-const serviceBicycle = BicycleService.getInstance();
+import { get_home } from '../controllers/client/home.controller.js';
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    const bicycles = await serviceBicycle.find({reserved:false});
-    return res.render('home', {
-        title: 'Página Principal',
-        bicycles
-    });
-});
+router.get('/', get_home);
 
 export default router;

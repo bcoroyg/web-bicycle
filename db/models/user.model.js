@@ -42,7 +42,10 @@ const UserSchema = new Schema({
     verified: {
         type: Boolean,
         default: false,
-    }
+    },
+    googleId: {
+        type: String
+    },
 });
 
 UserSchema.plugin(uniqueValidator, { message: '{VALUE} ya existe, intente nuevamente.' });

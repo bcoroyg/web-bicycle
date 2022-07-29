@@ -12,7 +12,10 @@ block content
         label(for='password') Contraseña
       .d-grid.gap-2
         button.btn.btn-primary.mt-3(type='submit') Iniciar Sesión
-      .pt-3
+      .d-flex.justify-content-end
+        a.lead.mx-1.text-danger(href="/google")
+          i.fab.fa-google-plus-square
+      .pt-2
         a.float-start.text-decoration-none(href='/') Volver a inicio
         a.float-end.text-decoration-none(href='/create-account') Crear cuenta
       .pt-4

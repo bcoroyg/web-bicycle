@@ -1,5 +1,7 @@
 import express from 'express';
 import { 
+    get_auth_google,
+    get_callback_google,
     get_confirm_account,
     get_create_account, 
     get_forgot_password, 
@@ -31,5 +33,8 @@ router.post('/forgot-password', forgotPasswordValidatorUser, post_forgot_passwor
 //restablecer contraseña
 router.get("/reset-password/:token", get_reset_password);
 router.post("/reset-password/:token", resetPasswordValidatorUser, post_reset_password);
+//Login google
+router.get('/google', get_auth_google);
+router.get('/google/callback', get_callback_google);
 
 export default router;
