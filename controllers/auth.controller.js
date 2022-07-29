@@ -100,3 +100,43 @@ export const get_logout = (req, res) => {
         return res.redirect('/login');
     });
 };
+
+export const get_forgot_password = (req, res) => {
+    return res.render('auth/forgot-password', {
+        title: "Restablecer Contraseña"
+    });
+};
+
+export const post_forgot_password = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const userDB = await serviceUser.findOne({ email });
+
+        if (!userDB) {
+            req.flash('error', 'No existe el correo ingresado, intente nuevamente.');
+            return res.redirect('/forgot-password');
+        };
+
+        //Creando token
+        userDB.token = crypto.randomBytes(16).toString('hex');
+        //Expiración del token
+        userDB.expireToken = Date.now()+3600000;
+        //Guardando los datos en la base de datos.
+        const user = await userDB.save();
+        //Creando url de reset password,
+        const url = `${req.headers.origin}/reset-password/${user.token}`
+
+        sendMail({
+            user,
+            subject: 'Restablecer contraseña',
+            file: 'reset-password',
+            url
+        });
+        req.flash('success', 'Se envio correo de recuperación de contraseña.')
+        return res.redirect('/login');
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Error al restablecer contraseña.')
+        return res.redirect('/forgot-password');
+    };
+};

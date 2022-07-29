@@ -2,12 +2,14 @@ import express from 'express';
 import { 
     get_confirm_account,
     get_create_account, 
+    get_forgot_password, 
     get_login, 
     get_logout, 
     post_create_account, 
+    post_forgot_password, 
     post_login 
 } from '../controllers/auth.controller.js';
-import { createValidatorUser } from '../utils/validators/auth.validator.js';
+import { createValidatorUser, forgotPasswordValidatorUser } from '../utils/validators/auth.validator.js';
 
 const router = express.Router();
 
@@ -21,5 +23,8 @@ router.get('/login', get_login);
 router.post('/login', post_login);
 //Cerrar Sesión
 router.get('/logout', get_logout);
+//Olvido de contraseña
+router.get('/forgot-password', get_forgot_password);
+router.post('/forgot-password', forgotPasswordValidatorUser, post_forgot_password);
 
 export default router;

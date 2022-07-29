@@ -34,3 +34,25 @@ export const createValidatorUser = [
         next()
     }
 ];
+
+export const forgotPasswordValidatorUser = [
+    //Sanitizar
+    body('email').escape(),
+    //validar
+    check('email', 'El correo es obligatorio.').notEmpty(),
+    (req, res, next) => {
+        const { errors } = validationResult(req);
+        if (errors.length > 0) {
+            let error = {};
+            errors.forEach(err => {
+                error = {
+                    ...error,
+                    [`${err.param}`]: err.msg
+                };
+            });
+            req.flash('errors', error);
+            return res.redirect('/forgot-password');
+        }
+        next()
+    }
+];
