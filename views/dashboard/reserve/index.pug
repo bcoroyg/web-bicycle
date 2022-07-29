@@ -1,0 +1,40 @@
+extends ../../layouts/layout
+
+block content
+  main.pt-5  
+    .my-3(style="height:50px;")
+      if locals.messages 
+        each categorie in Object.keys(locals.messages)
+          if categorie === 'success' || categorie === 'error'
+            .alert.alert-dismissible.fade.show.text-center(role='alert', class=(categorie==='success' ? 'alert-success':'alert-danger'))
+              strong= locals.messages[categorie]
+              button.btn-close(type='button', data-bs-dismiss="alert", aria-label="Close")
+    .table-responsive.my-5
+      table.table.table-striped
+        thead.table-dark
+          tr
+            th(scope='col') correo
+            th(scope='col') Bicicleta 
+            th(scope='col') Desde
+            th(scope='col') Hasta
+            th(scope='col')
+            th(scope='col')
+        tbody  
+          if !reserves.length
+            tr
+              th.text-center(colspan="6")='No hay reservas'
+          else 
+            each reserve in reserves
+              tr 
+                td(scope='row')= reserve.user.email
+                td= reserve.bicycle.model 
+                - moment.locale('es');
+                td= moment(reserve.from).format('LL')
+                td= moment(reserve.to).format('LL')
+                td 
+                  a.btn.btn-success.d-block(href= `/dashboard/reserves/${reserve.id}/update` role='button') Editar
+                td 
+                  form.d-grid(method='post' action=`/dashboard/reserves/${reserve.id}/delete`)
+                    input(type='hidden', name='id', value= reserve.id)
+                    button(type='submit', class='btn btn-danger') 
+                      = 'Eliminar' 

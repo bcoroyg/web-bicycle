@@ -11,32 +11,32 @@ class ReserveService {
         return ReserveService._reserveServiceInstance;
     };
 
-    async find(option={}){
+    async find(option = {}) {
         const reserves = await models.Reserve.find(option);
         return reserves;
     }
 
-    async findWithBicycle(option={}){
-        const reserves = await models.Reserve.find(option).populate('bicycle')
+    async findPopulate({ option = {}, pupulate }) {
+        const reserves = await models.Reserve.find(option).populate(pupulate)
         return reserves;
     }
 
-    async create({data}){
+    async create({ data }) {
         const reserve = await models.Reserve.create(data);
         return reserve;
     }
 
-    async findById({id}){
-        const reserve = await models.Reserve.findById(id);
+    async findById({ id }) {
+        const reserve = await models.Reserve.findById(id).populate('user bicycle');
         return reserve;
     }
 
-    async findByIdAndUpdate({id, data}){
+    async findByIdAndUpdate({ id, data }) {
         const reserve = await models.Reserve.findByIdAndUpdate(id, data, { new: true });
         return reserve;
     }
 
-    async findByIdAndDelete({id}){
+    async findByIdAndDelete({ id }) {
         const reserve = await models.Reserve.findByIdAndDelete(id);
         return reserve;
     }

@@ -3,8 +3,7 @@ block content
   main.pt-5 
     - const errors = messages.errors || null
     - const values = messages.values || null
-    .my-3(style="height:50px;")
-    .text-center 
+    .text-center.mt-5 
       h1 Actualizando Bicicleta
     .card-body
       form(action=`/dashboard/bicycles/${bicycle.id}/update` method='post')

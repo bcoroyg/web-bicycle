@@ -1,0 +1,16 @@
+extends ../../layouts/layout
+block content
+  main.pt-5  
+    .text-center.mt-5
+      h1 Actualizando Reserva de #{reserve.user.name}
+    .card-body
+      form(action=`/dashboard/reserves/${reserve._id}/update` method='post')
+        .form-group
+          label(for='from') Desde:
+          input#from.form-control(type='date', name='from', value=`${moment(reserve.from).format('YYYY-MM-DD')}`)
+        .form-group
+          label(for='to') Hasta:
+          input#to.form-control(type='date', name='to', value= `${moment(reserve.to).format('YYYY-MM-DD')}`)
+        .d-flex.mt-5
+          button.btn.btn-success.col-5(type='submit', value='OK') Actualizar
+          a.btn.btn-danger.col-5.ms-auto(href='/dashboard/reserves', role="button") Volver

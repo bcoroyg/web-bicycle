@@ -32,7 +32,8 @@ export const post_bicycle_reserve = async (req, res) => {
             from: moment(from),
             to: moment(to),
         }
-        await serviceReserve.create({data})
+        console.log(data)
+        await serviceReserve.create({ data })
         return res.redirect('/bicycles')
     } catch (error) {
         req.flash('error', error.message);
@@ -43,7 +44,7 @@ export const post_bicycle_reserve = async (req, res) => {
 export const get_my_reserves = async (req, res) => {
     const { id } = req.params;
     try {
-        const reserves = await serviceReserve.findWithBicycle({ user: id })
+        const reserves = await serviceReserve.findPopulate({ option: { user: id }, pupulate:'bicycle'})
         return res.render('client/reserve', {
             title: 'Mis reservas',
             reserves
