@@ -14,7 +14,9 @@ const config = {
     mailPort: process.env.MAIL_PORT,
     email: process.env.EMAIL,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
-    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    facebookId: process.env.FACEBOOK_ID,
+    facebookSecret: process.env.FACEBOOK_SECRET,
 
 };
 

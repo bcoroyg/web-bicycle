@@ -1,6 +1,8 @@
 import express from 'express';
 import { 
+    get_auth_facebook,
     get_auth_google,
+    get_callback_facebook,
     get_callback_google,
     get_confirm_account,
     get_create_account, 
@@ -36,5 +38,8 @@ router.post("/reset-password/:token", resetPasswordValidatorUser, post_reset_pas
 //Login google
 router.get('/google', get_auth_google);
 router.get('/google/callback', get_callback_google);
+//Login Facebook
+router.get('/facebook', get_auth_facebook);
+router.get('/facebook/callback', get_callback_facebook);
 
 export default router;

@@ -46,6 +46,9 @@ const UserSchema = new Schema({
     googleId: {
         type: String
     },
+    facebookId: {
+        type: String
+    },
 });
 
 UserSchema.plugin(uniqueValidator, { message: '{VALUE} ya existe, intente nuevamente.' });

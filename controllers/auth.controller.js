@@ -107,6 +107,23 @@ export const get_callback_google = [passport.authenticate('google', {
     }
 }];
 
+//FACEBOOK
+export const get_auth_facebook = passport.authenticate('facebook', {
+    scope: ["email"]
+});
+
+export const get_callback_facebook = [passport.authenticate('facebook', {
+    failureRedirect: '/login',
+    failureFlash: true,
+    badRequestMessage: 'Error OAuth Facebook.'
+}), (req, res) => {
+    if (req.user.role === 'Admin') {
+        res.redirect('/dashboard/bicycles');
+    } else {
+        res.redirect('/bicycles')
+    }
+}];
+
 export const get_logout = (req, res) => {
     req.logOut((err) => {
         if (err) {

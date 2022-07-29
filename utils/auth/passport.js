@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
 import shortid from 'shortid';
 import bcrypt from 'bcrypt';
 import UserService from '../../services/user.service.js';
@@ -68,7 +69,39 @@ passport.use(new GoogleStrategy({
         };
 
         return done(null, user);
-    } catch (err) {
+    } catch (error) {
+        return done(error);
+    };
+}));
+
+//Facebook
+passport.use(new FacebookStrategy({
+    clientID: config.facebookId,
+    clientSecret: config.facebookSecret,
+    callbackURL: `${config.host}/facebook/callback`,
+    profileFields: ['displayName', 'email'],
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        const user = await userService.findOne({
+            $or: [
+                { 'facebookId': profile.id },
+                { 'email': profile.emails[0].value }
+            ],
+        });
+
+        if (!user) {
+            const data = {
+                name: profile.displayName || "SIN NOMBRE",
+                email: profile.emails[0].value,
+                password: await bcrypt.hash(shortid.generate(), 10),
+                verified: true,
+                facebookId: profile.id,
+            };
+            const userFacebook = await userService.create({ data });
+            return done(null, userFacebook);
+        };
+        return done(null, user);
+    } catch (error) {
         return done(error);
     };
 }));
