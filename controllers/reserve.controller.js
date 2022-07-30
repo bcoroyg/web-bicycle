@@ -55,13 +55,9 @@ export const post_update_reserve = async (req, res) => {
         };
         req.flash('success', 'Reserva actualizada exitosamente.')
         return res.redirect('/dashboard/reserves');
-    } catch (err) {
-        return res.render('reserve/update', {
-            errors: err.errors,
-            from,
-            to,
-            moment,
-        });
+    } catch (error) {
+        req.flash('error', error.message);
+        return res.redirect('/dashboard/reserves');
     };
 };
 
@@ -77,9 +73,8 @@ export const post_delete_reserve = async (req, res) => {
         await serviceBicycle.findByIdAndUpdate({ id: reserve.bicycle, data: { reserved: false } });
         req.flash('success', 'Reserva eliminada exitosamente.')
         return res.redirect('/dashboard/reserves');
-    } catch (err) {
-        return res.render('reserve', {
-            errors: err.errors,
-        });
+    } catch (error) {
+        req.flash('error', error.message);
+        return res.redirect('/dashboard/reserves');
     };
 };

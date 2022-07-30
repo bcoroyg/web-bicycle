@@ -29,8 +29,9 @@ export const post_create_bicycle = async (req, res) => {
         await serviceBicycle.create({ data });
         req.flash('success', 'Bicicleta creada exitosamente.')
         return res.redirect('/dashboard/bicycles/create');
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        req.flash('error', error.message);
+        return res.redirect('/dashboard/bicycles');
     };
 };
 
@@ -76,10 +77,8 @@ export const post_update_bicycle = async (req, res) => {
         req.flash('success', 'La bicicleta fue actualizada exitosamente.');
         return res.redirect('/dashboard/bicycles');
     } catch (error) {
-        if (error.errors) {
-            req.flash('error', error.errors);
-            return res.redirect('/dashboard/bicycles');
-        }
+        req.flash('error', error.message);
+        return res.redirect('/dashboard/bicycles');
     };
 };
 
@@ -94,8 +93,8 @@ export const post_delete_bicycle = async (req, res) => {
         };
         req.flash('success', 'La bicicleta fue eliminada exitosamente.');
         return res.redirect('/dashboard/bicycles');
-    } catch (err) {
-        req.flash('error', err.message);
+    } catch (error) {
+        req.flash('error', error.message);
         return res.redirect('/dashboard/bicycles');
     };
 };

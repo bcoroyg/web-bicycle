@@ -17,7 +17,8 @@ const config = {
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     facebookId: process.env.FACEBOOK_ID,
     facebookSecret: process.env.FACEBOOK_SECRET,
-
+    newRelicAppName: process.env.NEW_RELIC_APP_NAME,
+    newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY,
 };
 
 export default config;
