@@ -11,9 +11,8 @@ import config from './config/index.js';
 import routerAPP from './routes/index.js';
 import connectionDB from './lib/mongoose.js';
 //New Relic
-if(process.env.NODE_ENV === 'production'){
-  (await import("newrelic")).default;
-}
+import "newrelic";
+
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const MongoDBStore = sessionMongoDB(session);
