@@ -12,7 +12,7 @@ import routerAPP from './routes/index.js';
 import connectionDB from './lib/mongoose.js';
 //New Relic
 if(process.env.NODE_ENV === 'production'){
-  (await import("newrelic"));
+  (await import("newrelic")).default;
 }
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));

@@ -16,7 +16,7 @@ let mailConfig;
 if (process.env.NODE_ENV === "production") {
     mailConfig = {
         host: config.mailHost,
-        port: config.mailPort,
+        port: Number(config.mailPort),
         secure:true,
         auth: {
             user: config.mailUser,
@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
     mailConfig = {
         host: config.mailHost,
-        port: config.mailPort,
+        port: Number(config.mailPort),
         auth: {
             user: config.mailUser,
             pass: config.mailPass,
